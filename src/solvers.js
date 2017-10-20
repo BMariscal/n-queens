@@ -16,14 +16,14 @@
 
 
 window.findNRooksSolution = function(n) {
-  let newBoard = new Board({ 'n':n });
-  for(let k = 0; k < newBoard.rows().length; k ++) {
-    for (let l = 0; l < newBoard.rows().length; l++){
-      newBoard.togglePiece(k,l);
-      if(!newBoard.hasAnyRooksConflicts() && (k === n-1)){
+  let newBoard = new Board({ 'n': n });
+  for (let k = 0; k < newBoard.rows().length; k ++) {
+    for (let l = 0; l < newBoard.rows().length; l++) {
+      newBoard.togglePiece(k, l);
+      if (!newBoard.hasAnyRooksConflicts() && (k === n - 1)) {
         return newBoard.rows();
-      }else if (newBoard.hasAnyRooksConflicts()){
-        newBoard.togglePiece(k,l);
+      } else if (newBoard.hasAnyRooksConflicts()) {
+        newBoard.togglePiece(k, l);
       }
     }
   }
@@ -33,19 +33,19 @@ window.findNRooksSolution = function(n) {
 window.countNRooksSolutions = function(n) {
   let newBoard = new Board({'n': n});
   let counter = 0;
-  function findSolution(newBoard, colIndex){
+  var finalSolution = function(newBoard, colIndex) {
     if (colIndex === newBoard.rows().length) {
       counter++;
     }
     for (let row = 0; row < newBoard.rows().length; row++) {
       newBoard.togglePiece(row, colIndex);
       if (!newBoard.hasAnyRooksConflicts()) {
-        findSolution(newBoard, colIndex + 1)
+        finalSolution(newBoard, colIndex + 1);
       }
-      newBoard.togglePiece(row, colIndex)
+      newBoard.togglePiece(row, colIndex);
     }
-  }
-  findSolution(newBoard, 0);
+  };
+  finalSolution(newBoard, 0);
   return counter;
 };
 
@@ -53,22 +53,22 @@ window.countNRooksSolutions = function(n) {
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
   let newBoard = new Board({n: n});
-  function findSolution(newBoard, row){
+  var finalSolution = function(newBoard, row) {
     if (row === newBoard.rows().length) {
       return newBoard.rows();
     }
     for (let colIndex = 0; colIndex < newBoard.rows().length; colIndex++) {
       newBoard.togglePiece(row, colIndex);
       if (!newBoard.hasAnyQueensConflicts()) {
-        let currentBoard = findSolution(newBoard, row + 1);
+        let currentBoard = finalSolution(newBoard, row + 1);
         if (currentBoard) {
           return currentBoard;
         }
       }
       newBoard.togglePiece(row, colIndex);
     }
-  }
-   return findSolution(newBoard,0) || newBoard.rows();
+  };
+  return finalSolution(newBoard, 0) || newBoard.rows();
 };
 
 
@@ -77,21 +77,20 @@ window.findNQueensSolution = function(n) {
 window.countNQueensSolutions = function(n) {
   let newBoard = new Board({'n': n});
   let counter = 0;
-
-  function findSolution(newBoard, colIndex) {
+  var finalSolution = function(newBoard, colIndex) {
     if (colIndex === newBoard.rows().length) {
       counter++;
     }
     for (let row = 0; row < newBoard.rows().length; row++) {
       newBoard.togglePiece(row, colIndex);
       if (!newBoard.hasAnyQueensConflicts()) {
-        findSolution(newBoard, colIndex + 1);
+        finalSolution(newBoard, colIndex + 1);
       }
       newBoard.togglePiece(row, colIndex);
     }
-  }
+  };
 
-  findSolution(newBoard, 0);
+  finalSolution(newBoard, 0);
   return counter;
 };
 

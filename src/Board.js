@@ -111,7 +111,7 @@
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      if (this.rows()[0] === undefined){
+      if (this.rows()[0] === undefined) {
         return false;
       }
       for (let col = 0; col < this.rows()[0].length; col++) {
